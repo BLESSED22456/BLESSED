@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLESSED -- Premium Designer Apparel</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Official drop of BLESSED, a design-forward clothing label. Shop Capsule 01 featuring high-quality minimalist streetwear and sculptural silhouettes.">
+  <meta name="keywords" content="BLESSED, clothing brand, streetwear, premium apparel, designer fashion, limited drops, custom tailoring">
+  <meta name="author" content="BLESSED">
+  
+  <!-- Fonts: Kanit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#0C0C0C',
+            brandLight: '#D7E2EA',
+          },
+          fontFamily: {
+            sans: ['Kanit', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  
+  <!-- Custom Styling -->
+  <style>
+    /* Global Resets and Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body, #root {
+      background-color: #0C0C0C;
+      /* Subtle glowing radial gradient in background */
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(182, 0, 168, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 85%, rgba(118, 33, 176, 0.05) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: #D7E2EA;
+      font-family: 'Kanit', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    /* Scrollbar Design */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0C0C0C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #252627;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #646973;
+    }
+    
+    /* Hero Heading Text Gradient */
+    .hero-heading {
+      background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Smooth transitions for links */
+    .nav-link {
+      transition: opacity 200ms ease-in-out;
+    }
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+    
+    /* Performance hint */
+    .marquee-row {
+      will-change: transform;
+    }
+    
+    /* Custom utility for inner outline shadow */
+    .contact-btn-shadow {
+      box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), inset 4px 4px 12px #7721B1;
+      outline: 2px solid white;
+      outline-offset: -3px;
+    }
+  </style>
+  
+  <!-- React and ES modules setup -->
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "framer-motion": "https://esm.sh/framer-motion@11.11.11",
+        "lucide-react": "https://esm.sh/lucide-react@0.344.0"
+      }
+    }
+  </script>
+  
+  <!-- Babel compiler to compile JSX/TS client-side -->
+  <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module">
+    import React, { useState, useEffect, useRef } from 'react';
+    import ReactDOM from 'react-dom/client';
+    import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+    import { 
+      ShoppingBag, X, Plus, Minus, ArrowRight, Check, Star, 
+      Menu, Shield, ArrowUpRight, CheckCircle, CreditCard, Loader2
+    } from 'lucide-react';
+
+    // Global Mock Apparel Products (Easy for User to Replace Later)
+    const PRODUCTS = [
+      {
+        id: 'blessed-hands-tee',
+        name: 'BLESSED "Praying Hands" Tee',
+        price: 1299,
+        type: 'tees',
+        description: 'Premium 240 GSM super-combed 100% cotton t-shirt with drop-shoulder fit. Features the signature BLESSED praying hands back print with custom floral border art.',
+        image: 'blessed_hands_beige.jpg',
+        colors: [
+          { name: 'Beige', hex: '#E2D4C5' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-HANDS'
+      },
+      {
+        id: 'dream-come-true-tee',
+        name: 'BLESSED "Dream Come True" Tee',
+        price: 1299,
+        type: 'tees',
+        description: 'Premium 240 GSM heavyweight combed cotton streetwear tee featuring a metallic gold hand holding dollar bills artwork printed on the back.',
+        image: 'dream_come_true_red.jpg',
+        colors: [
+          { name: 'Crimson Red', hex: '#B91C1C' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-DREAM'
+      },
+      {
+        id: 'beauty-money-tee',
+        name: 'BLESSED "Beauty Money" Tee',
+        price: 1299,
+        type: 'oversized',
+        description: 'Premium 240 GSM drop-shoulder oversized t-shirt. Features dual-sided high-density print combining currency collage elements and soft floral graphics.',
+        image: 'beauty_money_mint.jpg',
+        colors: [
+          { name: 'Mint Green', hex: '#93C5FD' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-BEAUTY'
+      },
+      {
+        id: 'apocalypse-tee',
+        name: 'BLESSED "Earth Apocalypse" Tee',
+        price: 999,
+        type: 'vintage',
+        description: 'Classic 180 GSM combed cotton t-shirt with standard streetwear fit. Features the "EARTH APOCALYPSE" globe graphic on the center back.',
+        image: 'collection_grid.jpg',
+        colors: [
+          { name: 'Obsidian Black', hex: '#111111' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-APOC'
+      },
+      {
+        id: 'speak-truth-tee',
+        name: 'BLESSED "Speak Truth" Tee',
+        price: 999,
+        type: 'vintage',
+        description: 'Classic 180 GSM combed cotton crewneck tee. Front graphic features the screaming mouth collage design and bold contrast typography.',
+        image: 'collection_grid.jpg',
+        colors: [
+          { name: 'Dark Maroon', hex: '#501A1F' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-TRUTH'
+      }
+    ];
+
+    // ==========================================
+    // REUSABLE & ANIMATION COMPONENTS
+    // ==========================================
+
+    // FadeIn entrance animation wrapper
+    const FadeIn = ({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = "" }) => {
+      return (
+        <motion.div
+          initial={{ opacity: 0, x, y }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, margin: "50px", amount: 0.1 }}
+          transition={{
+            delay,
+            duration,
+            ease: [0.25, 0.1, 0.25, 1]
+          }}
+          className={className}
+        >
+          {children}
+        </motion.div>
+      );
+    };
+
+    // Mouse-following Magnet effect component
+    const Magnet = ({ children, padding = 150, strength = 3, className = "" }) => {
+      const containerRef = useRef(null);
+      const [transform, setTransform] = useState({ x: 0, y: 0 });
+      const [transition, setTransition] = useState("");
+
+      const handleMouseMove = (e) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        
+        // Find cursor position relative to viewport
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        // Calculate center of target element
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Calculate distance from center
+        const distX = mouseX - centerX;
+        const distY = mouseY - centerY;
+
+        // Determine if mouse is within active padding zone
+        const distance = Math.sqrt(distX * distX + distY * distY);
+        const maxRadius = Math.max(rect.width, rect.height) + padding;
+
+        if (distance < maxRadius) {
+          // Magnetism: stronger near center
+          setTransition("transform 0.3s ease-out");
+          setTransform({
+            x: distX / strength,
+            y: distY / strength
+          });
+        } else {
+          setTransition("transform 0.6s ease-in-out");
+          setTransform({ x: 0, y: 0 });
+        }
+      };
+
+      const handleMouseLeave = () => {
+        setTransition("transform 0.6s ease-in-out");
+        setTransform({ x: 0, y: 0 });
+      };
+
+      return (
+        <div 
+          ref={containerRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className={`relative inline-block ${className}`}
+          style={{ 
+            transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+            transition,
+            willChange: 'transform'
+          }}
+        >
+          {children}
+        </div>
+      );
+    };
+
+    // Character-by-character scroll opacity text animation
+    const AnimatedText = ({ text, className = "" }) => {
+      const textRef = useRef(null);
+      const { scrollYProgress } = useScroll({
+        target: textRef,
+        offset: ['start 0.8', 'end 0.2']
+      });
+
+      const chars = text.split("");
+
+      return (
+        <p ref={textRef} className={`${className} flex flex-wrap justify-center relative`}>
+          {chars.map((char, index) => {
+            const rangeStart = index / chars.length;
+            const rangeEnd = (index + 1.5) / chars.length;
+            
+            // Map scroll progress to character opacity (0.2 to 1)
+            const opacity = useTransform(
+              scrollYProgress, 
+              [Math.max(0, rangeStart), Math.min(1, rangeEnd)], 
+              [0.2, 1]
+            );
+
+            return (
+              <motion.span 
+                key={index} 
+                style={{ opacity }} 
+                className="inline-block whitespace-pre"
+              >
+                {char}
+              </motion.span>
+            );
+          })}
+        </p>
+      );
+    };
+
+    // Reusable Custom Styled Contact Button
+    const ContactButton = ({ label = "Contact Us", onClick }) => {
+      return (
+        <button
+          onClick={onClick}
+          className="contact-btn-shadow px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 rounded-full text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-transform active:scale-95 duration-150"
+          style={{
+            background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
+          }}
+        >
+          {label}
+        </button>
+      );
+    };
+
+    // Reusable Outline Ghost button
+    const LiveProjectButton = ({ label = "Live Project", onClick }) => {
+      return (
+        <button
+          onClick={onClick}
+          className="px-8 py-3 sm:px-10 sm:py-3.5 border-2 border-brandLight text-brandLight hover:bg-brandLight/10 rounded-full text-sm sm:text-base font-medium uppercase tracking-widest transition-all duration-200"
+        >
+          {label}
+        </button>
+      );
+    };
+
+    // ==========================================
+    // LAYOUT SECTIONS
+    // ==========================================
+
+    // 1. HERO SECTION
+    const HeroSection = ({ onContactClick, cartCount, onCartOpen }) => {
+      return (
+        <section className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden pt-6 pb-10 px-6 md:px-10 z-20">
+          {/* Header/Navbar */}
+          <FadeIn delay={0} y={-20}>
+            <header className="flex justify-between items-center w-full">
+              {/* Brand Logo / Creator Name */}
+              <a href="#" className="font-extrabold uppercase tracking-tighter text-2xl text-brandLight select-none">
+                BLESSED<span className="text-pink-600 font-black">.</span>
+              </a>
+
+              {/* Navigation links */}
+              <nav className="hidden md:flex justify-between items-center space-x-12">
+                <a href="#about" className="nav-link text-brandLight text-sm md:text-lg lg:text-[1.1rem] uppercase tracking-wider font-medium">About</a>
+                <a href="#shop" className="nav-link text-brandLight text-sm md:text-lg lg:text-[1.1rem] uppercase tracking-wider font-medium">Price</a>
+                <a href="#categories" className="nav-link text-brandLight text-sm md:text-lg lg:text-[1.1rem] uppercase tracking-wider font-medium">Categories</a>
+                <a href="#contact" onClick={(e) => { e.preventDefault(); onContactClick(); }} className="nav-link text-brandLight text-sm md:text-lg lg:text-[1.1rem] uppercase tracking-wider font-medium">Contact</a>
+              </nav>
+
+              {/* Cart Drawer Trigger */}
+              <button 
+                onClick={onCartOpen}
+                className="relative flex items-center justify-center p-2.5 rounded-full border-2 border-brandLight/20 hover:border-brandLight/60 hover:bg-brandLight/10 transition-all duration-200 group"
+              >
+                <ShoppingBag className="w-5 h-5 text-brandLight group-hover:scale-105 transition-transform duration-200" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-pink-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            </header>
+          </FadeIn>
+
+          {/* Hero Portrait: Centered Absolutely behind text layers */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none sm:pointer-events-auto">
+            <FadeIn delay={0.6} y={30}>
+              <Magnet padding={150} strength={3}>
+                <div className="w-[260px] sm:w-[340px] md:w-[420px] lg:w-[480px] aspect-[4/5] rounded-[36px] overflow-hidden border-2 border-brandLight/10 shadow-2xl relative select-none">
+                  {/* Reverted back to the original designer portrait image URL */}
+                  <img 
+                    src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png" 
+                    alt="BLESSED Creator Portrait" 
+                    className="w-full h-full object-cover grayscale contrast-125 brightness-95"
+                    loading="eager"
+                  />
+                  {/* Overlay shadow to integrate with black background */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brandDark via-transparent to-transparent opacity-80" />
+                </div>
+              </Magnet>
+            </FadeIn>
+          </div>
+
+          {/* Hero Heading: Overlayed vertically */}
+          <div className="flex-1 flex flex-col justify-center items-center w-full relative z-20 pointer-events-none mt-20 sm:mt-10">
+            <FadeIn delay={0.15} y={40} className="w-full">
+              <h1 className="hero-heading font-black uppercase tracking-tight leading-none text-center select-none text-[13vw] sm:text-[14vw] md:text-[15vw] lg:text-[16.5vw] overflow-hidden w-full whitespace-nowrap">
+                BLESSED
+              </h1>
+            </FadeIn>
+          </div>
+
+          {/* Bottom Bar Details */}
+          <div className="flex justify-between items-end w-full relative z-20 pb-2 sm:pb-4 md:pb-6">
+            {/* Left Statement */}
+            <FadeIn delay={0.35} y={20}>
+              <p className="text-brandLight font-light uppercase tracking-wide leading-snug max-w-[150px] sm:max-w-[210px] md:max-w-[250px]" style={{ fontSize: 'clamp(0.7rem, 1.3vw, 1.25rem)' }}>
+                A premium designer clothing label crafting high-fidelity minimalist street apparel.
+              </p>
+            </FadeIn>
+            
+            {/* Right Contact button */}
+            <FadeIn delay={0.5} y={20}>
+              <ContactButton onClick={onContactClick} label="Shop Drop" />
+            </FadeIn>
+          </div>
+        </section>
+      );
+    };
+
+    // 2. MARQUEE SECTION (Populated with user's t-shirt and design images)
+    const MarqueeSection = () => {
+      const sectionRef = useRef(null);
+      const row1Ref = useRef(null);
+      const row2Ref = useRef(null);
+
+      // User's custom design images copied to workspace
+      const designImages = [
+        "blessed_hands_beige.jpg",
+        "dream_come_true_red.jpg",
+        "blessed_hands_maroon.jpg",
+        "beauty_money_mint.jpg",
+        "collection_grid.jpg"
+      ];
+
+      // Repeated to create a seamless infinite horizontal scroll
+      const row1Data = [...designImages, ...designImages, ...designImages, ...designImages];
+      const row2Data = [...designImages, ...designImages, ...designImages, ...designImages].reverse();
+
+      useEffect(() => {
+        const handleScroll = () => {
+          if (!sectionRef.current) return;
+          const rect = sectionRef.current.getBoundingClientRect();
+          const sectionTop = window.scrollY + rect.top;
+          
+          // Calculate offset based on scroll position relative to marquee section
+          const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
+          
+          if (row1Ref.current) {
+            row1Ref.current.style.transform = `translate3d(${offset - 200}px, 0px, 0px)`;
+          }
+          if (row2Ref.current) {
+            row2Ref.current.style.transform = `translate3d(${-(offset - 200)}px, 0px, 0px)`;
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Trigger initial position calculation
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      return (
+        <section ref={sectionRef} className="bg-brandDark pt-24 sm:pt-32 md:pt-40 pb-10 w-full overflow-hidden flex flex-col gap-3 relative z-20 select-none">
+          {/* Row 1 (Moves Right) */}
+          <div className="w-full overflow-hidden">
+            <div ref={row1Ref} className="marquee-row flex gap-3 w-max">
+              {row1Data.map((imgSrc, index) => (
+                <div 
+                  key={`row1-${index}`} 
+                  className="w-[280px] sm:w-[350px] md:w-[420px] h-[180px] sm:h-[220px] md:h-[270px] rounded-2xl overflow-hidden bg-zinc-900 flex-shrink-0"
+                >
+                  <img 
+                    src={imgSrc} 
+                    alt={`Blessed Design ${index}`} 
+                    className="w-full h-full object-cover" 
+                    loading="lazy" 
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2 (Moves Left) */}
+          <div className="w-full overflow-hidden">
+            <div ref={row2Ref} className="marquee-row flex gap-3 w-max">
+              {row2Data.map((imgSrc, index) => (
+                <div 
+                  key={`row2-${index}`} 
+                  className="w-[280px] sm:w-[350px] md:w-[420px] h-[180px] sm:h-[220px] md:h-[270px] rounded-2xl overflow-hidden bg-zinc-900 flex-shrink-0"
+                >
+                  <img 
+                    src={imgSrc} 
+                    alt={`Blessed Design ${index}`} 
+                    className="w-full h-full object-cover" 
+                    loading="lazy" 
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // 3. ABOUT SECTION
+    const AboutSection = ({ onContactClick }) => {
+      return (
+        <section id="about" className="relative min-h-screen w-full flex flex-col justify-center items-center px-6 sm:px-10 py-20 bg-brandDark overflow-hidden z-20">
+          {/* Corner Elements (3D Images) with entry animations */}
+          <div className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%] z-10 pointer-events-none">
+            <FadeIn delay={0.1} x={-80} y={0} duration={0.9}>
+              <img 
+                src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png" 
+                alt="Moon Decoration" 
+                className="w-[100px] sm:w-[140px] md:w-[210px] h-auto pointer-events-none"
+              />
+            </FadeIn>
+          </div>
+
+          <div className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%] z-10 pointer-events-none">
+            <FadeIn delay={0.15} x={80} y={0} duration={0.9}>
+              <img 
+                src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png" 
+                alt="Lego Decoration" 
+                className="w-[100px] sm:w-[140px] md:w-[210px] h-auto pointer-events-none"
+              />
+            </FadeIn>
+          </div>
+
+          <div className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] z-10 pointer-events-none">
+            <FadeIn delay={0.25} x={-80} y={0} duration={0.9}>
+              <img 
+                src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" 
+                alt="3D Ring Decoration" 
+                className="w-[80px] sm:w-[120px] md:w-[180px] h-auto pointer-events-none"
+              />
+            </FadeIn>
+          </div>
+
+          <div className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] z-10 pointer-events-none">
+            <FadeIn delay={0.3} x={80} y={0} duration={0.9}>
+              <img 
+                src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png" 
+                alt="3D Cluster Decoration" 
+                className="w-[110px] sm:w-[150px] md:w-[220px] h-auto pointer-events-none"
+              />
+            </FadeIn>
+          </div>
+
+          {/* Central content stack */}
+          <div className="flex flex-col items-center max-w-4xl text-center relative z-20">
+            {/* About Heading */}
+            <FadeIn delay={0} y={40}>
+              <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center select-none mb-10 sm:mb-14 md:mb-16" style={{ fontSize: 'clamp(2.5rem, 11vw, 150px)' }}>
+                About BLESSED
+              </h2>
+            </FadeIn>
+
+            {/* Scroll animated text block */}
+            <AnimatedText 
+              text="BLESSED is a design-forward clothing label at the intersection of raw street culture and high-fidelity physical design. We focus on premium construction, sculptural silhouettes, and limited drops designed for those who seek to express their unique identity. Each piece is meticulously crafted using sustainable materials and precise manufacturing. Wear the blessing." 
+              className="text-brandLight font-medium leading-relaxed max-w-[560px] mb-16 sm:mb-20 md:mb-24 text-center justify-center"
+              style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.35rem)' }}
+            />
+
+            {/* Button */}
+            <FadeIn delay={0.1} y={20}>
+              <ContactButton onClick={onContactClick} label="Shop The Drop" />
+            </FadeIn>
+          </div>
+        </section>
+      );
+    };
+
+    // 4. BRAND CORE PILLARS SECTION
+    const ServicesSection = () => {
+      const pillars = [
+        {
+          num: "01",
+          name: "Fabric Sourcing",
+          desc: "Sourcing only the finest heavyweight organic cottons, soft merino wools, and high-density technical weatherproof nylons to assure quality durability."
+        },
+        {
+          num: "02",
+          name: "Sculptural Fits",
+          desc: "Custom-patterned garments designed specifically for architectural volume, relaxed modern draping shapes, and high-street style comfort."
+        },
+        {
+          num: "03",
+          name: "Artisanal Craft",
+          desc: "Meticulous structural construction featuring dense 3D graphic embroidery, custom-molded utility zippers, and reinforced double-needle stitching."
+        },
+        {
+          num: "04",
+          name: "Curated Drops",
+          desc: "Garments are released in strictly limited quantity capsule runs to completely eliminate overproduction, waste, and assure true wearer exclusivity."
+        },
+        {
+          num: "05",
+          name: "Insured Delivery",
+          desc: "Carbon-neutral, fully tracked global dispatching wrapped inside premium structural boxes designed to protect and preserve garment shapes."
+        }
+      ];
+
+      return (
+        <section className="bg-white text-brandDark rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-6 sm:px-10 py-20 sm:py-24 md:py-32 relative z-30">
+          <div className="max-w-5xl mx-auto flex flex-col items-center">
+            {/* Pillars Heading */}
+            <FadeIn delay={0} y={40}>
+              <h2 className="font-black uppercase tracking-tight text-center select-none text-brandDark mb-16 sm:mb-20 md:mb-28" style={{ fontSize: 'clamp(2.5rem, 11vw, 150px)' }}>
+                Our Pillars
+              </h2>
+            </FadeIn>
+
+            {/* Staggered Vertical List */}
+            <div className="w-full flex flex-col border-t border-brandDark/15">
+              {pillars.map((item, index) => (
+                <FadeIn key={item.num} delay={index * 0.1} y={30}>
+                  <div className="flex flex-col sm:flex-row justify-between items-start py-8 sm:py-10 md:py-12 border-b border-brandDark/15 group hover:bg-zinc-50/50 transition-colors duration-200">
+                    
+                    {/* Left side: Number */}
+                    <div 
+                      className="font-black leading-none text-brandDark tracking-tighter sm:w-1/3 mb-4 sm:mb-0 select-none group-hover:translate-x-2 transition-transform duration-300"
+                      style={{ fontSize: 'clamp(2.5rem, 9vw, 120px)' }}
+                    >
+                      {item.num}
+                    </div>
+                    
+                    {/* Right side: Title & Description */}
+                    <div className="flex-1 flex flex-col space-y-3 sm:space-y-4">
+                      <h3 className="font-medium uppercase select-none" style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}>
+                        {item.name}
+                      </h3>
+                      <p className="font-light leading-relaxed max-w-2xl opacity-70" style={{ fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                    
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // 5. SHOP SECTION (Price Link Target)
+    const ShopSection = ({ onAddToCart, onBuyNow, activeFilter, onFilterChange, products }) => {
+      const [selectedSizes, setSelectedSizes] = useState({});
+      const [selectedColors, setSelectedColors] = useState({});
+
+      // Initialize defaults for product options
+      useEffect(() => {
+        const defaultSizes = {};
+        const defaultColors = {};
+        products.forEach(p => {
+          defaultSizes[p.id] = p.sizes[0];
+          defaultColors[p.id] = p.colors[0];
+        });
+        setSelectedSizes(defaultSizes);
+        setSelectedColors(defaultColors);
+      }, [products]);
+
+      const handleSizeSelect = (productId, size) => {
+        setSelectedSizes(prev => ({ ...prev, [productId]: size }));
+      };
+
+      const handleColorSelect = (productId, colorObj) => {
+        setSelectedColors(prev => ({ ...prev, [productId]: colorObj }));
+      };
+
+      // Filter products based on active filter state
+      const filteredProducts = activeFilter === 'all' 
+        ? products 
+        : products.filter(p => p.type === activeFilter);
+
+      return (
+        <section id="shop" className="bg-brandDark px-6 sm:px-10 py-20 sm:py-24 md:py-32 relative z-30 border-t border-brandLight/10">
+          <div className="max-w-6xl mx-auto flex flex-col items-center">
+            {/* Section Header */}
+            <FadeIn delay={0} y={40}>
+              <h2 className="hero-heading font-black uppercase tracking-tight text-center select-none mb-4" style={{ fontSize: 'clamp(2.5rem, 11vw, 150px)' }}>
+                BLESSED DROP
+              </h2>
+            </FadeIn>
+            
+            <FadeIn delay={0.1} y={20}>
+              <p className="text-brandLight/60 font-light uppercase tracking-widest text-center text-sm md:text-base mb-12">
+                Capsule 01 &bull; Signature Streetwear &bull; Limited Release
+              </p>
+            </FadeIn>
+
+            {/* Interactive Filter Tab Bar */}
+            <FadeIn delay={0.15} y={15} className="w-full flex justify-center mb-16 sm:mb-20">
+              <div className="flex gap-2 p-1.5 bg-zinc-900/60 rounded-2xl border border-brandLight/10 max-w-lg w-full justify-between select-none">
+                {['all', 'tees', 'oversized', 'vintage'].map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => onFilterChange(tab)}
+                    className={`flex-1 py-2 text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 ${
+                      activeFilter === tab
+                        ? 'bg-brandLight text-brandDark shadow'
+                        : 'text-brandLight/60 hover:text-white'
+                    }`}
+                  >
+                    {tab === 'all' ? 'All' : tab}
+                  </button>
+                ))}
+              </div>
+            </FadeIn>
+
+            {/* Grid of Product Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full">
+              {filteredProducts.map((product, idx) => {
+                const activeSize = selectedSizes[product.id] || product.sizes[0];
+                const activeColor = selectedColors[product.id] || product.colors[0];
+
+                // Dynamic Swatch Image Swapping logic
+                const displayImage = (product.images && activeColor)
+                  ? (product.images[activeColor.name] || product.image)
+                  : product.image;
+
+                return (
+                  <FadeIn key={product.id} delay={idx * 0.1} y={40} className="w-full">
+                    <div className="group flex flex-col bg-zinc-900/40 rounded-[32px] overflow-hidden border border-brandLight/10 hover:border-brandLight/25 transition-all duration-300 p-5 sm:p-6 md:p-8 h-full">
+                      
+                      {/* Product Image Frame */}
+                      <div className="w-full aspect-square rounded-2xl overflow-hidden bg-brandDark mb-6 relative">
+                        <img 
+                          src={displayImage} 
+                          alt={product.name} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        {/* Status tag */}
+                        <div className="absolute top-4 left-4 bg-brandDark/85 px-4 py-1.5 rounded-full border border-pink-500/20 text-pink-500 text-xs font-black uppercase tracking-wider select-none">
+                          In Stock
+                        </div>
+                      </div>
+
+                      {/* Header Title & Pricing */}
+                      <div className="flex justify-between items-start mb-3 select-none">
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold uppercase tracking-wide text-brandLight group-hover:text-white transition-colors duration-200">
+                          {product.name}
+                        </h3>
+                        <span className="text-lg sm:text-xl lg:text-2xl font-black text-brandLight">
+                          ₹{product.price.toLocaleString()}
+                        </span>
+                      </div>
+
+                      {/* Product Description */}
+                      <p className="text-brandLight/65 font-light text-sm sm:text-base leading-relaxed mb-6 flex-1">
+                        {product.description}
+                      </p>
+
+                      {/* Option Selectors */}
+                      <div className="space-y-4 mb-6 border-t border-brandLight/10 pt-5">
+                        
+                        {/* Size Picker */}
+                        <div className="flex items-center gap-4">
+                          <span className="text-xs uppercase tracking-wider text-brandLight/50 font-medium w-12">Size:</span>
+                          <div className="flex gap-2 flex-wrap">
+                            {product.sizes.map(size => (
+                              <button
+                                key={size}
+                                onClick={() => handleSizeSelect(product.id, size)}
+                                className={`h-8 min-w-8 px-2.5 rounded-md text-xs font-semibold flex items-center justify-center transition-all duration-200 border uppercase select-none ${
+                                  activeSize === size
+                                    ? 'bg-brandLight text-brandDark border-brandLight scale-105'
+                                    : 'bg-transparent text-brandLight border-brandLight/20 hover:border-brandLight/50 hover:bg-brandLight/5'
+                                }`}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                      {/* CTA Buttons */}
+                      <div className="grid grid-cols-2 gap-3 mt-auto">
+                        <button
+                          onClick={() => onAddToCart(product, activeSize, activeColor)}
+                          className="py-3 px-4 rounded-xl border-2 border-brandLight/35 text-brandLight font-medium uppercase tracking-widest text-xs sm:text-sm hover:bg-brandLight/10 active:scale-[0.98] transition-all duration-150"
+                        >
+                          Add To Cart
+                        </button>
+                        <button
+                          onClick={() => onBuyNow(product, activeSize, activeColor)}
+                          className="py-3 px-4 rounded-xl font-bold uppercase tracking-widest text-xs sm:text-sm text-brandDark bg-brandLight hover:bg-white hover:shadow-lg hover:shadow-brandLight/10 active:scale-[0.98] transition-all duration-150"
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+
+          </div>
+        </section>
+      );
+    };
+
+    // 6. CATEGORIES SECTION (Converted from Capsules/Projects)
+    const CategoriesSection = ({ onSelectCategory }) => {
+      const categories = [
+        {
+          num: "01",
+          type: "tees",
+          category: "Essential Graphics",
+          name: "Graphic Tees",
+          col1_img1: "blessed_hands_beige.jpg",
+          col1_img2: "dream_come_true_red.jpg",
+          col2_img: "blessed_hands_maroon.jpg"
+        },
+        {
+          num: "02",
+          type: "oversized",
+          category: "Heavyweight Basics",
+          name: "Oversized Fit",
+          col1_img1: "beauty_money_mint.jpg",
+          col1_img2: "collection_grid.jpg",
+          col2_img: "beauty_money_mint.jpg"
+        },
+        {
+          num: "03",
+          type: "vintage",
+          category: "Vintage Aesthetics",
+          name: "Vintage Prints",
+          col1_img1: "collection_grid.jpg",
+          col1_img2: "collection_grid.jpg",
+          col2_img: "collection_grid.jpg"
+        }
+      ];
+
+      return (
+        <section id="categories" className="bg-brandDark rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 pb-20 md:pb-28 px-6 sm:px-10 pt-20 relative z-40 border-t border-brandLight/5">
+          <div className="max-w-5xl mx-auto flex flex-col items-center">
+            {/* Heading */}
+            <FadeIn delay={0} y={40}>
+              <h2 className="hero-heading font-black uppercase tracking-tight text-center select-none mb-16 sm:mb-20 md:mb-28" style={{ fontSize: 'clamp(2.5rem, 11vw, 150px)' }}>
+                Categories
+              </h2>
+            </FadeIn>
+
+            {/* Sticky Card Stacking Container */}
+            <div className="w-full flex flex-col gap-[10vh] sm:gap-[15vh]">
+              {categories.map((cat, index) => {
+                const targetScale = 1 - (categories.length - 1 - index) * 0.03;
+                
+                return (
+                  <div 
+                    key={cat.num}
+                    className="sticky w-full bg-brandDark rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
+                    style={{ 
+                      top: `${96 + index * 28}px`,
+                    }}
+                  >
+                    <div 
+                      className="w-full border-2 border-brandLight bg-brandDark p-4 sm:p-6 md:p-8 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] flex flex-col shadow-2xl relative"
+                      style={{
+                        transform: `scale(${targetScale})`,
+                        transformOrigin: 'top center',
+                        transition: 'transform 0.2s ease-out'
+                      }}
+                    >
+                      {/* Top Row: Info */}
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-6 gap-4 select-none">
+                        <div className="flex items-center gap-6">
+                          <span className="font-black text-brandLight text-4xl sm:text-5xl md:text-6xl tracking-tighter">
+                            {cat.num}
+                          </span>
+                          <div className="flex flex-col">
+                            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-pink-500">
+                              {cat.category}
+                            </span>
+                            <span className="font-semibold text-xl sm:text-2xl uppercase tracking-wider text-brandLight">
+                              {cat.name}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Category filter button */}
+                        <LiveProjectButton 
+                          label={`View ${cat.name}`} 
+                          onClick={() => onSelectCategory(cat.type)} 
+                        />
+                      </div>
+
+                      {/* Bottom Row: Image Grid (40% width stacked column / 60% tall column) */}
+                      <div className="grid grid-cols-1 md:grid-cols-10 gap-4 sm:gap-6">
+                        {/* Col 1: 40% Width (4/10 cols) - Stacked Images */}
+                        <div className="md:col-span-4 flex flex-col gap-4 sm:gap-6">
+                          <div className="rounded-[24px] sm:rounded-[36px] overflow-hidden bg-zinc-950 aspect-[4/3] w-full">
+                            <img 
+                              src={cat.col1_img1} 
+                              alt={`${cat.name} view 1`} 
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="rounded-[24px] sm:rounded-[36px] overflow-hidden bg-zinc-950 aspect-[4/3] w-full">
+                            <img 
+                              src={cat.col1_img2} 
+                              alt={`${cat.name} view 2`} 
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Col 2: 60% Width (6/10 cols) - Tall Image */}
+                        <div className="md:col-span-6 rounded-[24px] sm:rounded-[36px] overflow-hidden bg-zinc-950 aspect-[4/5] md:aspect-auto w-full h-full min-h-[300px]">
+                          <img 
+                            src={cat.col2_img} 
+                            alt={`${cat.name} featured`} 
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </section>
+      );
+    };
+
+    // ==========================================
+    // SHOPPING CART DRAWER
+    // ==========================================
+    const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem, onCheckout }) => {
+      const subtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+
+      return (
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                exit={{ opacity: 0 }}
+                onClick={onClose}
+                className="fixed inset-0 bg-black z-50 pointer-events-auto"
+              />
+
+              {/* Slider Panel */}
+              <motion.div 
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
+                className="fixed top-0 right-0 bottom-0 w-full sm:w-[450px] bg-brandDark border-l border-brandLight/10 z-50 shadow-2xl flex flex-col p-6 pointer-events-auto text-brandLight"
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center pb-5 border-b border-brandLight/10 mb-6">
+                  <div className="flex items-center gap-3">
+                    <ShoppingBag className="w-6 h-6 text-pink-500" />
+                    <h3 className="font-bold text-xl uppercase tracking-wider">Your Cart</h3>
+                    <span className="bg-zinc-800 text-[11px] font-bold px-2 py-0.5 rounded-full text-brandLight/80">
+                      {cartItems.reduce((sum, i) => sum + i.quantity, 0)}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={onClose} 
+                    className="p-1 rounded-full hover:bg-zinc-800 border border-transparent hover:border-brandLight/15 transition-all duration-200"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Items List */}
+                <div className="flex-1 overflow-y-auto space-y-4 pr-1">
+                  {cartItems.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
+                      <ShoppingBag className="w-16 h-16 text-zinc-700 stroke-1" />
+                      <p className="text-brandLight/50 font-light">Your shopping cart is currently empty.</p>
+                      <button 
+                        onClick={onClose}
+                        className="text-pink-500 text-sm font-semibold uppercase tracking-widest hover:underline hover:text-pink-400 transition-colors"
+                      >
+                        Explore Drop
+                      </button>
+                    </div>
+                  ) : (
+                    cartItems.map((item, idx) => (
+                      <div 
+                        key={`${item.product.id}-${item.size}-${item.color.name}`}
+                        className="flex gap-4 bg-zinc-900/50 p-3.5 rounded-2xl border border-brandLight/5 hover:border-brandLight/10 transition-colors"
+                      >
+                        {/* Image */}
+                        <div className="w-20 h-20 rounded-xl overflow-hidden bg-brandDark flex-shrink-0">
+                          {/* Render dynamic color image in cart too! */}
+                          <img 
+                            src={(item.product.images && item.color) ? (item.product.images[item.color.name] || item.product.image) : item.product.image} 
+                            alt={item.product.name} 
+                            className="w-full h-full object-cover" 
+                          />
+                        </div>
+
+                        {/* Details */}
+                        <div className="flex-1 flex flex-col justify-between">
+                          <div>
+                            <h4 className="font-semibold text-sm uppercase tracking-wide text-white leading-tight">
+                              {item.product.name}
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-brandLight/60 mt-1 uppercase font-medium">
+                              <span>Size: <strong className="text-white">{item.size}</strong></span>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-between items-center mt-2">
+                            {/* Quantity Controls */}
+                            <div className="flex items-center border border-brandLight/10 rounded-lg overflow-hidden bg-brandDark">
+                              <button 
+                                onClick={() => onUpdateQuantity(idx, -1)}
+                                className="p-1 hover:bg-zinc-800 transition-colors text-brandLight/70"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="px-3 text-xs font-bold text-white select-none">
+                                {item.quantity}
+                              </span>
+                              <button 
+                                onClick={() => onUpdateQuantity(idx, 1)}
+                                className="p-1 hover:bg-zinc-800 transition-colors text-brandLight/70"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Cost & Remove */}
+                            <div className="flex items-center gap-3">
+                              <span className="font-bold text-sm text-white">
+                                ₹{(item.product.price * item.quantity).toLocaleString()}
+                              </span>
+                              <button 
+                                onClick={() => onRemoveItem(idx)}
+                                className="text-zinc-500 hover:text-red-500 text-xs transition-colors"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Subtotal & Checkout Block */}
+                {cartItems.length > 0 && (
+                  <div className="border-t border-brandLight/10 pt-5 mt-6 space-y-4">
+                    <div className="flex justify-between items-center font-medium">
+                      <span className="text-brandLight/60 uppercase text-xs tracking-wider">Subtotal</span>
+                      <span className="text-xl font-black text-white">₹{subtotal.toLocaleString()}</span>
+                    </div>
+                    <p className="text-[11px] text-brandLight/40 leading-normal">
+                      Shipping costs, taxes, and discounts calculated during checkout. Secure payments powered by Stripe technology.
+                    </p>
+                    <button
+                      onClick={onCheckout}
+                      className="w-full py-4 bg-brandLight text-brandDark hover:bg-white text-sm font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-brandLight/5"
+                    >
+                      Proceed to Checkout
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      );
+    };
+
+    // ==========================================
+    // INTERACTIVE CHECKOUT MODAL
+    // ==========================================
+    const CheckoutModal = ({ isOpen, onClose, cartItems, onOrderComplete }) => {
+      const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Processing, 4: Success
+      const [formData, setFormData] = useState({
+        name: '', email: '', address: '', city: '', zip: '',
+        cardNum: '', cardExp: '', cardCvc: ''
+      });
+      const [orderId, setOrderId] = useState('');
+
+      const orderTotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0) + 150; // adding ₹150 shipping fee
+
+      useEffect(() => {
+        if (isOpen) {
+          setStep(1); // Reset modal when opened
+        }
+      }, [isOpen]);
+
+      const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+
+      const handleNext = async (e) => {
+        e.preventDefault();
+        if (step === 1) {
+          setStep(2);
+        } else if (step === 2) {
+          setStep(3);
+          try {
+            const response = await fetch('/api/checkout', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                cartItems,
+                shippingDetails: {
+                  name: formData.name,
+                  email: formData.email,
+                  address: formData.address,
+                  city: formData.city,
+                  zip: formData.zip
+                }
+              })
+            });
+            const data = await response.json();
+            if (response.ok && data.success) {
+              setOrderId(data.order_id || 'BS-' + Math.floor(Math.random() * 900000 + 100000));
+              setStep(4);
+              onOrderComplete();
+            } else {
+              alert(data.error || 'Failed to place order via API. Please try again.');
+              setStep(2);
+            }
+          } catch (err) {
+            console.error('Checkout error:', err);
+            alert('Failed to connect to the server checkout API. Please verify the server is running.');
+            setStep(2);
+          }
+        }
+      };
+
+      if (!isOpen) return null;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto">
+          {/* Backdrop */}
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={step < 3 ? onClose : undefined} />
+
+          {/* Modal Card */}
+          <div className="relative w-full max-w-lg bg-zinc-900 border border-brandLight/10 rounded-[32px] shadow-2xl p-6 sm:p-8 text-brandLight z-55 overflow-hidden">
+            
+            {/* Close button (disable during processing or success) */}
+            {step < 3 && (
+              <button 
+                onClick={onClose}
+                className="absolute top-6 right-6 p-1 rounded-full hover:bg-zinc-800 text-brandLight/60 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Stepper Progress Bar */}
+            {step < 4 && (
+              <div className="flex items-center justify-center gap-2 mb-8 select-none">
+                <span className={`w-2.5 h-2.5 rounded-full ${step >= 1 ? 'bg-pink-500' : 'bg-zinc-700'}`} />
+                <span className={`h-0.5 w-10 ${step >= 2 ? 'bg-pink-500' : 'bg-zinc-700'}`} />
+                <span className={`w-2.5 h-2.5 rounded-full ${step >= 2 ? 'bg-pink-500' : 'bg-zinc-700'}`} />
+                <span className={`h-0.5 w-10 ${step >= 3 ? 'bg-pink-500' : 'bg-zinc-700'}`} />
+                <span className={`w-2.5 h-2.5 rounded-full ${step >= 3 ? 'bg-pink-500' : 'bg-zinc-700'}`} />
+              </div>
+            )}
+
+            {/* 1. SHIPPING STEP */}
+            {step === 1 && (
+              <form onSubmit={handleNext} className="space-y-5">
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold uppercase tracking-wider text-white">Shipping Details</h3>
+                  <p className="text-xs text-brandLight/50 font-light">Input your shipping address details below.</p>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Full Name</label>
+                    <input 
+                      type="text" required name="name" value={formData.name} onChange={handleInputChange}
+                      className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                      placeholder="Jane Doe"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Email Address</label>
+                    <input 
+                      type="email" required name="email" value={formData.email} onChange={handleInputChange}
+                      className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                      placeholder="jane@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Address</label>
+                    <input 
+                      type="text" required name="address" value={formData.address} onChange={handleInputChange}
+                      className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                      placeholder="123 Grid Avenue"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">City</label>
+                      <input 
+                        type="text" required name="city" value={formData.city} onChange={handleInputChange}
+                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                        placeholder="San Francisco"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">ZIP / Postal Code</label>
+                      <input 
+                        type="text" required name="zip" value={formData.zip} onChange={handleInputChange}
+                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                        placeholder="94103"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-brandLight/10 pt-4 flex justify-between items-center text-sm font-medium">
+                  <span className="text-brandLight/50 uppercase text-xs">Total + Shipping</span>
+                  <span className="text-lg font-bold text-white">₹{orderTotal.toLocaleString()}</span>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 bg-brandLight text-brandDark hover:bg-white text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+                >
+                  Continue to Payment
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+            )}
+
+            {/* 2. PAYMENT STEP */}
+            {step === 2 && (
+              <form onSubmit={handleNext} className="space-y-5">
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold uppercase tracking-wider text-white">Payment Method</h3>
+                  <p className="text-xs text-brandLight/50 font-light">Enter credit card details. This is a secure checkout flow.</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="bg-brandDark/40 p-4 rounded-2xl border border-brandLight/5 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <CreditCard className="w-5 h-5 text-pink-500" />
+                      <span className="text-sm font-semibold uppercase text-brandLight">Credit Card</span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider text-green-500 font-bold bg-green-500/10 px-2 py-0.5 rounded-md">
+                      Encrypted
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Card Number</label>
+                    <input 
+                      type="text" required name="cardNum" value={formData.cardNum} onChange={handleInputChange}
+                      className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                      placeholder="4000 1234 5678 9010"
+                      pattern="\d{16}|\d{4}\s\d{4}\s\d{4}\s\d{4}"
+                      maxLength="19"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Expiry Date</label>
+                      <input 
+                        type="text" required name="cardExp" value={formData.cardExp} onChange={handleInputChange}
+                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                        placeholder="MM/YY"
+                        maxLength="5"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Security Code (CVC)</label>
+                      <input 
+                        type="password" required name="cardCvc" value={formData.cardCvc} onChange={handleInputChange}
+                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                        placeholder="123"
+                        maxLength="4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-brandLight/10 pt-4 flex justify-between items-center text-sm font-medium">
+                  <span className="text-brandLight/50 uppercase text-xs">Total Charged</span>
+                  <span className="text-lg font-bold text-white">₹{orderTotal.toLocaleString()}</span>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button" onClick={() => setStep(1)}
+                    className="flex-1 py-3.5 border-2 border-brandLight/20 hover:border-brandLight/55 text-brandLight text-xs font-bold uppercase tracking-widest rounded-xl transition-all duration-150 active:scale-95"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-[2] py-3.5 bg-brandLight text-brandDark hover:bg-white text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-brandLight/5"
+                  >
+                    Authorize Payment
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* 3. PROCESSING STEP */}
+            {step === 3 && (
+              <div className="py-12 flex flex-col items-center justify-center text-center space-y-6">
+                <Loader2 className="w-14 h-14 text-pink-500 animate-spin" />
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold uppercase tracking-wider text-white">Authorizing Order</h3>
+                  <p className="text-sm text-brandLight/60 font-light max-w-xs leading-normal">
+                    Securely communicating with card issuing bank. Please do not close or reload this window...
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* 4. SUCCESS STEP */}
+            {step === 4 && (
+              <div className="py-8 flex flex-col items-center justify-center text-center space-y-6">
+                <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-500">
+                  <CheckCircle className="w-10 h-10" />
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-black uppercase tracking-wider text-white">Order Confirmed</h3>
+                  <p className="text-sm text-brandLight/65 font-light max-w-xs leading-normal mx-auto">
+                    Thank you for supporting BLESSED&apos;s digital drop. Your payment was validated successfully, and your order has been registered.
+                  </p>
+                </div>
+
+                <div className="bg-brandDark/50 border border-brandLight/5 p-4 rounded-2xl w-full text-left space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-brandLight/50 font-medium">Order Number:</span>
+                    <strong className="text-white font-mono">{orderId}</strong>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-brandLight/50 font-medium">Delivery Method:</span>
+                    <strong className="text-white">Worldwide Standard (Insured)</strong>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-brandLight/50 font-medium">Shipping To:</span>
+                    <strong className="text-white truncate max-w-[200px]">{formData.name}</strong>
+                  </div>
+                </div>
+
+                <button
+                  onClick={onClose}
+                  className="w-full py-3.5 bg-brandLight text-brandDark hover:bg-white text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95"
+                >
+                  Return to Store
+                </button>
+              </div>
+            )}
+
+          </div>
+        </div>
+      );
+    };
+
+    // ==========================================
+    // MAIN APP CONTAINER
+    // ==========================================
+    const App = () => {
+      const [cart, setCart] = useState([]);
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+      const [categoryFilter, setCategoryFilter] = useState('all');
+      const [products, setProducts] = useState(PRODUCTS);
+
+      // Fetch products dynamically from products.json when component mounts
+      useEffect(() => {
+        fetch('/products.json')
+          .then(res => {
+            if (!res.ok) throw new Error('Network response was not ok');
+            return res.json();
+          })
+          .then(data => {
+            if (data && Array.isArray(data)) {
+              setProducts(data);
+            }
+          })
+          .catch(err => {
+            console.warn('Failed to load products from products.json, falling back to static products.', err);
+          });
+      }, []);
+
+      // Scroll lock when drawers/modals are active
+      useEffect(() => {
+        if (isCartOpen || isCheckoutOpen) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'unset';
+        }
+        return () => {
+          document.body.style.overflow = 'unset';
+        };
+      }, [isCartOpen, isCheckoutOpen]);
+
+      // Cart modifiers
+      const handleAddToCart = (product, size, color) => {
+        setCart(prev => {
+          // Check if item with same configuration already in cart
+          const existingIdx = prev.findIndex(
+            item => item.product.id === product.id && item.size === size && item.color.name === color.name
+          );
+
+          if (existingIdx > -1) {
+            const nextCart = [...prev];
+            nextCart[existingIdx].quantity += 1;
+            return nextCart;
+          } else {
+            return [...prev, { product, size, color, quantity: 1 }];
+          }
+        });
+        
+        // Open drawer on add
+        setIsCartOpen(true);
+      };
+
+      const handleBuyNow = (product, size, color) => {
+        // Clear cart first or just replace with this item
+        setCart([{ product, size, color, quantity: 1 }]);
+        // Trigger checkout directly
+        setIsCheckoutOpen(true);
+      };
+
+      const handleUpdateQuantity = (index, delta) => {
+        setCart(prev => {
+          const nextCart = [...prev];
+          const newQty = nextCart[index].quantity + delta;
+          if (newQty <= 0) {
+            nextCart.splice(index, 1);
+          } else {
+            nextCart[index].quantity = newQty;
+          }
+          return nextCart;
+        });
+      };
+
+      const handleRemoveItem = (index) => {
+        setCart(prev => {
+          const nextCart = [...prev];
+          nextCart.splice(index, 1);
+          return nextCart;
+        });
+      };
+
+      const handleOrderComplete = () => {
+        // Empty cart upon successful order
+        setCart([]);
+      };
+
+      const scrollIntoView = (id) => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      // Select Category from Categories section: sets filter and scrolls to shop
+      const handleSelectCategory = (type) => {
+        setCategoryFilter(type);
+        scrollIntoView('shop');
+      };
+
+      return (
+        <div className="relative w-full min-h-screen bg-brandDark text-brandLight overflow-x-clip flex flex-col">
+          {/* Main Layout Sections */}
+          <HeroSection 
+            onContactClick={() => handleSelectCategory('all')}
+            cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+            onCartOpen={() => setIsCartOpen(true)}
+          />
+          <MarqueeSection />
+          <AboutSection onContactClick={() => handleSelectCategory('all')} />
+          <ServicesSection />
+          
+          {/* Workable Shop Section */}
+          <ShopSection 
+            onAddToCart={handleAddToCart}
+            onBuyNow={handleBuyNow}
+            activeFilter={categoryFilter}
+            onFilterChange={setCategoryFilter}
+            products={products}
+          />
+          
+          {/* Categories Section (Converted from Capsules/Projects) */}
+          <CategoriesSection onSelectCategory={handleSelectCategory} />
+
+          {/* Simple Premium Footer */}
+          <footer id="contact" className="bg-brandDark border-t border-brandLight/10 py-16 px-6 md:px-10 text-center relative z-40 text-brandLight/50 select-none">
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+              <span className="font-extrabold uppercase tracking-widest text-brandLight">
+                BLESSED<span className="text-pink-600 font-black">.</span>STUDIO
+              </span>
+              <div className="flex gap-8 text-xs uppercase font-semibold tracking-widest">
+                <a href="#about" className="hover:text-white transition-colors">About</a>
+                <a href="#shop" className="hover:text-white transition-colors">Shop</a>
+                <a href="#categories" className="hover:text-white transition-colors">Categories</a>
+                <a href="mailto:contact@blessed.studio" className="hover:text-white transition-colors">Email</a>
+              </div>
+              <span className="text-xs font-light">
+                &copy; {new Date().getFullYear()} BLESSED. ALL RIGHTS RESERVED.
+              </span>
+            </div>
+          </footer>
+
+          {/* Shopping Cart Drawer */}
+          <CartDrawer 
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cart}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveItem}
+            onCheckout={() => {
+              setIsCartOpen(false);
+              setIsCheckoutOpen(true);
+            }}
+          />
+
+          {/* Checkout Modal */}
+          <CheckoutModal 
+            isOpen={isCheckoutOpen}
+            onClose={() => setIsCheckoutOpen(false)}
+            cartItems={cart}
+            onOrderComplete={handleOrderComplete}
+          />
+        </div>
+      );
+    };
+
+    // Render the React application into the root element
+    const rootEl = document.getElementById('root');
+    const root = ReactDOM.createRoot(rootEl);
+    root.render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "blessed-hands-tee",
+    "name": "BLESSED 'Praying Hands' Tee",
+    "price": 1299,
+    "type": "tees",
+    "description": "Premium 240 GSM super-combed 100% cotton t-shirt with drop-shoulder fit. Features the signature BLESSED praying hands back print with custom floral border art.",
+    "image": "blessed_hands_beige.jpg",
+    "colors": [
+      { "name": "Beige", "hex": "#E2D4C5" }
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "sku": "TEE-BLSD-HANDS"
+  },
+  {
+    "id": "dream-come-true-tee",
+    "name": "BLESSED 'Dream Come True' Tee",
+    "price": 1299,
+    "type": "tees",
+    "description": "Premium 240 GSM heavyweight combed cotton streetwear tee featuring a metallic gold hand holding dollar bills artwork printed on the back.",
+    "image": "dream_come_true_red.jpg",
+    "colors": [
+      { "name": "Crimson Red", "hex": "#B91C1C" }
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "sku": "TEE-BLSD-DREAM"
+  },
+  {
+    "id": "beauty-money-tee",
+    "name": "BLESSED 'Beauty Money' Tee",
+    "price": 1299,
+    "type": "oversized",
+    "description": "Premium 240 GSM drop-shoulder oversized t-shirt. Features dual-sided high-density print combining currency collage elements and soft floral graphics.",
+    "image": "beauty_money_mint.jpg",
+    "colors": [
+      { "name": "Mint Green", "hex": "#93C5FD" }
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "sku": "TEE-BLSD-BEAUTY"
+  },
+  {
+    "id": "apocalypse-tee",
+    "name": "BLESSED 'Earth Apocalypse' Tee",
+    "price": 999,
+    "type": "vintage",
+    "description": "Classic 180 GSM combed cotton t-shirt with standard streetwear fit. Features the 'EARTH APOCALYPSE' globe graphic on the center back.",
+    "image": "collection_grid.jpg",
+    "colors": [
+      { "name": "Obsidian Black", "hex": "#111111" }
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "sku": "TEE-BLSD-APOC"
+  },
+  {
+    "id": "speak-truth-tee",
+    "name": "BLESSED 'Speak Truth' Tee",
+    "price": 999,
+    "type": "vintage",
+    "description": "Classic 180 GSM combed cotton crewneck tee. Front graphic features the screaming mouth collage design and bold contrast typography.",
+    "image": "collection_grid.jpg",
+    "colors": [
+      { "name": "Dark Maroon", "hex": "#501A1F" }
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "sku": "TEE-BLSD-TRUTH"
+  }
+]
