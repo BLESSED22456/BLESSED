@@ -1,7 +1,7 @@
 @echo off
 title BLESSED Storefront Auto-Push
 echo ==========================================
-echo       BLESSED Storefront - Push to Git
+echo       BLESSED Storefront - Force Push to Git
 echo ==========================================
 echo.
 
@@ -42,8 +42,8 @@ set commit_msg=Storefront Update: %date% %time%
 git commit -m "%commit_msg%"
 echo.
 
-echo Pushing to GitHub (origin main)...
-git push -u origin main
+echo Pushing to GitHub with Force Overwrite (origin main)...
+git push -f -u origin main
 echo.
 
 echo ==========================================
