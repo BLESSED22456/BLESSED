@@ -46,7 +46,7 @@
   {
     "id": "beauty-money-tee",
     "name": "BLESSED 'Beauty Money' Tee",
-    "price": 359,
+    "price": 398,
     "type": "oversized",
     "description": "Premium 240 GSM drop-shoulder oversized t-shirt. Features dual-sided high-density print combining currency collage elements and soft floral graphics.",
     "image": "beauty_money_mint.jpg",
@@ -70,7 +70,7 @@
     "price": 419,
     "type": "vintage",
     "description": "Classic 180 GSM combed cotton t-shirt with standard streetwear fit. Features the 'EARTH APOCALYPSE' globe graphic on the center back.",
-    "image": "collection_grid.jpg",
+    "image": "earth_apocalypse.jpg",
     "colors": [
       {
         "name": "Obsidian Black",
@@ -91,7 +91,7 @@
     "price": 419,
     "type": "vintage",
     "description": "Classic 180 GSM combed cotton crewneck tee. Front graphic features the screaming mouth collage design and bold contrast typography.",
-    "image": "collection_grid.jpg",
+    "image": "speak_truth.jpg",
     "colors": [
       {
         "name": "Dark Maroon",
