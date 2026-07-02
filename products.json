@@ -105,5 +105,112 @@
       "XL"
     ],
     "sku": "TEE-BLSD-TRUTH"
+  },
+  {
+    "id": "statue-authority-yellow",
+    "name": "BLESSED 'Statue of Authority' Tee (Mustard Yellow)",
+    "price": 398,
+    "type": "tees",
+    "description": "Premium 240 GSM drop-shoulder streetwear tee featuring classical Greek sculpture back graphics and bold 'AUTHORITY MMXXIV' typography in contrast print.",
+    "image": "statue_authority_yellow.jpg",
+    "colors": [
+      {
+        "name": "Mustard Yellow",
+        "hex": "#DDA15E"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-AUTH-YLW"
+  },
+  {
+    "id": "statue-authority-black",
+    "name": "BLESSED 'Statue of Authority' Tee (Obsidian Black)",
+    "price": 398,
+    "type": "tees",
+    "description": "Premium 240 GSM drop-shoulder streetwear tee featuring classical Greek sculpture back graphics and bold 'AUTHORITY MMXXIV' typography in contrast print.",
+    "image": "statue_authority_black.jpg",
+    "colors": [
+      {
+        "name": "Obsidian Black",
+        "hex": "#111111"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-AUTH-BLK"
+  },
+  {
+    "id": "florals-cash-white",
+    "name": "BLESSED 'Florals & Cash' Tee (Off-White)",
+    "price": 398,
+    "type": "oversized",
+    "description": "Premium 240 GSM oversized streetwear t-shirt with a vintage back graphic showcasing a stack of $100 bills crowned with a vibrant blooming flower.",
+    "image": "florals_cash_white.jpg",
+    "colors": [
+      {
+        "name": "Off-White",
+        "hex": "#F5F5F0"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "sku": "TEE-BLSD-FLR-CASH"
+  },
+  {
+    "id": "world-disaster-red",
+    "name": "BLESSED 'World Disaster' Tee (Crimson Red)",
+    "price": 344,
+    "type": "vintage",
+    "description": "Classic 180 GSM combed cotton t-shirt with standard fit, highlighting the contrast 'NATURAL DISASTERS' text print surrounding an Earth globe visual on the back.",
+    "image": "world_disaster_red.jpg",
+    "colors": [
+      {
+        "name": "Crimson Red",
+        "hex": "#B91C1C"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "sku": "TEE-BLSD-DISASTER"
+  },
+  {
+    "id": "speak-truth-white",
+    "name": "BLESSED 'Speak Truth' Tee (Bone White)",
+    "price": 398,
+    "type": "vintage",
+    "description": "Classic 180 GSM cotton crewneck tee with a front print visual of the glitch screaming mouth collage art and bold crimson typography.",
+    "image": "speak_truth_white.jpg",
+    "colors": [
+      {
+        "name": "Bone White",
+        "hex": "#EAE6DF"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "sku": "TEE-BLSD-TRUTH-WHT"
   }
 ]

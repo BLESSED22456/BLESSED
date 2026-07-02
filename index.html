@@ -192,6 +192,71 @@
         ],
         sizes: ['S', 'M', 'L', 'XL'],
         sku: 'TEE-BLSD-TRUTH'
+      },
+      {
+        id: 'statue-authority-yellow',
+        name: 'BLESSED "Statue of Authority" Tee (Mustard Yellow)',
+        price: 398,
+        type: 'tees',
+        description: 'Premium 240 GSM drop-shoulder streetwear tee featuring classical Greek sculpture back graphics and bold "AUTHORITY MMXXIV" typography in contrast print.',
+        image: 'statue_authority_yellow.jpg',
+        colors: [
+          { name: 'Mustard Yellow', hex: '#DDA15E' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        sku: 'TEE-BLSD-AUTH-YLW'
+      },
+      {
+        id: 'statue-authority-black',
+        name: 'BLESSED "Statue of Authority" Tee (Obsidian Black)',
+        price: 398,
+        type: 'tees',
+        description: 'Premium 240 GSM drop-shoulder streetwear tee featuring classical Greek sculpture back graphics and bold "AUTHORITY MMXXIV" typography in contrast print.',
+        image: 'statue_authority_black.jpg',
+        colors: [
+          { name: 'Obsidian Black', hex: '#111111' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        sku: 'TEE-BLSD-AUTH-BLK'
+      },
+      {
+        id: 'florals-cash-white',
+        name: 'BLESSED "Florals & Cash" Tee (Off-White)',
+        price: 398,
+        type: 'oversized',
+        description: 'Premium 240 GSM oversized streetwear t-shirt with a vintage back graphic showcasing a stack of $100 bills crowned with a vibrant blooming flower.',
+        image: 'florals_cash_white.jpg',
+        colors: [
+          { name: 'Off-White', hex: '#F5F5F0' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-FLR-CASH'
+      },
+      {
+        id: 'world-disaster-red',
+        name: 'BLESSED "World Disaster" Tee (Crimson Red)',
+        price: 344,
+        type: 'vintage',
+        description: 'Classic 180 GSM combed cotton t-shirt with standard fit, highlighting the contrast "NATURAL DISASTERS" text print surrounding an Earth globe visual on the back.',
+        image: 'world_disaster_red.jpg',
+        colors: [
+          { name: 'Crimson Red', hex: '#B91C1C' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-DISASTER'
+      },
+      {
+        id: 'speak-truth-white',
+        name: 'BLESSED "Speak Truth" Tee (Bone White)',
+        price: 398,
+        type: 'vintage',
+        description: 'Classic 180 GSM cotton crewneck tee with a front print visual of the glitch screaming mouth collage art and bold crimson typography.',
+        image: 'speak_truth_white.jpg',
+        colors: [
+          { name: 'Bone White', hex: '#EAE6DF' }
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        sku: 'TEE-BLSD-TRUTH-WHT'
       }
     ];
 
@@ -1105,12 +1170,17 @@
         cardNum: '', cardExp: '', cardCvc: ''
       });
       const [orderId, setOrderId] = useState('');
+      const [paymentMethod, setPaymentMethod] = useState('Prepaid'); // 'Prepaid' or 'COD'
 
-      const orderTotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0) + 150; // adding ₹150 shipping fee
+      const cartSubtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+      const shippingCharge = 69;
+      const codCharge = paymentMethod === 'COD' ? 49 : 0;
+      const orderTotal = cartSubtotal + shippingCharge + codCharge;
 
       useEffect(() => {
         if (isOpen) {
           setStep(1); // Reset modal when opened
+          setPaymentMethod('Prepaid'); // Reset payment method to default Prepaid
         }
       }, [isOpen]);
 
@@ -1132,6 +1202,7 @@
               },
               body: JSON.stringify({
                 cartItems,
+                gateway: paymentMethod, // 'COD' or 'Prepaid'
                 shippingDetails: {
                   name: formData.name,
                   email: formData.email,
@@ -1262,51 +1333,89 @@
               <form onSubmit={handleNext} className="space-y-5">
                 <div className="space-y-1">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-white">Payment Method</h3>
-                  <p className="text-xs text-brandLight/50 font-light">Enter credit card details. This is a secure checkout flow.</p>
+                  <p className="text-xs text-brandLight/50 font-light">Select your preferred payment option below.</p>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-brandDark/40 p-4 rounded-2xl border border-brandLight/5 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <CreditCard className="w-5 h-5 text-pink-500" />
-                      <span className="text-sm font-semibold uppercase text-brandLight">Credit Card</span>
+                  {/* Prepaid Card Option */}
+                  <div 
+                    onClick={() => setPaymentMethod('Prepaid')}
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between select-none ${
+                      paymentMethod === 'Prepaid' 
+                        ? 'border-brandLight bg-zinc-800/40 shadow-lg' 
+                        : 'border-brandLight/10 bg-brandDark/40 hover:border-brandLight/30'
+                    }`}
+                  >
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-semibold uppercase text-white">Prepaid Card</span>
+                      <span className="text-[11px] text-brandLight/50 font-light mt-0.5">Secure payment via credit/debit card.</span>
                     </div>
                     <span className="text-[10px] uppercase tracking-wider text-green-500 font-bold bg-green-500/10 px-2 py-0.5 rounded-md">
-                      Encrypted
+                      Free Shipping
                     </span>
                   </div>
 
-                  <div>
-                    <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Card Number</label>
-                    <input 
-                      type="text" required name="cardNum" value={formData.cardNum} onChange={handleInputChange}
-                      className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
-                      placeholder="4000 1234 5678 9010"
-                      pattern="\d{16}|\d{4}\s\d{4}\s\d{4}\s\d{4}"
-                      maxLength="19"
-                    />
+                  {/* COD Option */}
+                  <div 
+                    onClick={() => setPaymentMethod('COD')}
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between select-none ${
+                      paymentMethod === 'COD' 
+                        ? 'border-brandLight bg-zinc-800/40 shadow-lg' 
+                        : 'border-brandLight/10 bg-brandDark/40 hover:border-brandLight/30'
+                    }`}
+                  >
+                    <div className="flex flex-col text-left">
+                      <span className="text-sm font-semibold uppercase text-white">Cash on Delivery (COD)</span>
+                      <span className="text-[11px] text-brandLight/50 font-light mt-0.5">Pay in cash when package arrives.</span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider text-pink-500 font-bold bg-pink-500/10 px-2 py-0.5 rounded-md">
+                      + ₹49 COD Fee
+                    </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Expiry Date</label>
-                      <input 
-                        type="text" required name="cardExp" value={formData.cardExp} onChange={handleInputChange}
-                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
-                        placeholder="MM/YY"
-                        maxLength="5"
-                      />
+                  {/* Prepaid Card Form Inputs (Only visible if Prepaid is selected) */}
+                  {paymentMethod === 'Prepaid' && (
+                    <div className="space-y-3 border-t border-brandLight/10 pt-4 mt-4 animate-fadeIn">
+                      <div>
+                        <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Card Number</label>
+                        <input 
+                          type="text" required={paymentMethod === 'Prepaid'} name="cardNum" value={formData.cardNum} onChange={handleInputChange}
+                          className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                          placeholder="4000 1234 5678 9010"
+                          pattern="\d{16}|\d{4}\s\d{4}\s\d{4}\s\d{4}"
+                          maxLength="19"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Expiry Date</label>
+                          <input 
+                            type="text" required={paymentMethod === 'Prepaid'} name="cardExp" value={formData.cardExp} onChange={handleInputChange}
+                            className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                            placeholder="MM/YY"
+                            maxLength="5"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Security Code (CVC)</label>
+                          <input 
+                            type="password" required={paymentMethod === 'Prepaid'} name="cardCvc" value={formData.cardCvc} onChange={handleInputChange}
+                            className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
+                            placeholder="123"
+                            maxLength="4"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-[10px] uppercase font-bold tracking-widest text-brandLight/50 block mb-1">Security Code (CVC)</label>
-                      <input 
-                        type="password" required name="cardCvc" value={formData.cardCvc} onChange={handleInputChange}
-                        className="w-full bg-brandDark border border-brandLight/15 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-brandLight text-white" 
-                        placeholder="123"
-                        maxLength="4"
-                      />
+                  )}
+
+                  {/* COD Surcharge Notice (Only visible if COD is selected) */}
+                  {paymentMethod === 'COD' && (
+                    <div className="p-3 bg-pink-500/5 border border-pink-500/15 rounded-xl text-[11px] text-pink-500/80 leading-normal text-left font-light">
+                      * Cash on Delivery adds an additional service helper charge of <strong>₹49</strong>. Please ensure cash is ready upon arrival.
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="border-t border-brandLight/10 pt-4 flex justify-between items-center text-sm font-medium">
@@ -1325,7 +1434,7 @@
                     type="submit"
                     className="flex-[2] py-3.5 bg-brandLight text-brandDark hover:bg-white text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-brandLight/5"
                   >
-                    Authorize Payment
+                    {paymentMethod === 'COD' ? 'Confirm COD Order' : 'Authorize Payment'}
                   </button>
                 </div>
               </form>
@@ -1336,9 +1445,13 @@
               <div className="py-12 flex flex-col items-center justify-center text-center space-y-6">
                 <Loader2 className="w-14 h-14 text-pink-500 animate-spin" />
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-white">Authorizing Order</h3>
+                  <h3 className="text-xl font-bold uppercase tracking-wider text-white">
+                    {paymentMethod === 'COD' ? 'Registering COD Order' : 'Authorizing Order'}
+                  </h3>
                   <p className="text-sm text-brandLight/60 font-light max-w-xs leading-normal">
-                    Securely communicating with card issuing bank. Please do not close or reload this window...
+                    {paymentMethod === 'COD' 
+                      ? 'Creating secure Cash on Delivery order records. Please do not close this window...'
+                      : 'Securely communicating with card issuing bank. Please do not close this window...'}
                   </p>
                 </div>
               </div>
@@ -1354,7 +1467,7 @@
                 <div className="space-y-3">
                   <h3 className="text-2xl font-black uppercase tracking-wider text-white">Order Confirmed</h3>
                   <p className="text-sm text-brandLight/65 font-light max-w-xs leading-normal mx-auto">
-                    Thank you for supporting BLESSED&apos;s digital drop. Your payment was validated successfully, and your order has been registered.
+                    Thank you for supporting BLESSED&apos;s digital drop. Your order has been registered successfully.
                   </p>
                 </div>
 
@@ -1364,8 +1477,10 @@
                     <strong className="text-white font-mono">{orderId}</strong>
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-brandLight/50 font-medium">Delivery Method:</span>
-                    <strong className="text-white">Worldwide Standard (Insured)</strong>
+                    <span className="text-brandLight/50 font-medium">Payment Mode:</span>
+                    <strong className="text-white">
+                      {paymentMethod === 'COD' ? 'Cash on Delivery (₹49 COD Fee)' : 'Prepaid (Card Payment)'}
+                    </strong>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-brandLight/50 font-medium">Shipping To:</span>

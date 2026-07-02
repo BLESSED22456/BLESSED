@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Load environment variables from local .env file if it exists (CJS fallback for dotenv)
+// Load environment variables from local .env file if it exists
 const envPath = path.join(__dirname, '.env');
 if (fs.existsSync(envPath)) {
   const envContent = fs.readFileSync(envPath, 'utf-8');
@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
     req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
-        const { cartItems, shippingDetails } = payload;
+        const { cartItems, shippingDetails, gateway } = payload;
 
         if (!cartItems || !shippingDetails) {
           res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -62,7 +62,7 @@ const server = http.createServer((req, res) => {
         const orderPayload = {
           order_number: 'BLSD-' + Date.now(),
           qikink_shipping: '1',
-          gateway: 'Prepaid',
+          gateway: gateway || 'Prepaid', // COD or Prepaid
           shipping_address: {
             first_name: firstName,
             last_name: lastName,

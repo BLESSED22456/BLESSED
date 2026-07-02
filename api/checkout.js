@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { cartItems, shippingDetails } = req.body;
+    const { cartItems, shippingDetails, gateway } = req.body;
 
     if (!cartItems || !shippingDetails) {
       return res.status(400).json({ error: 'Missing cart items or shipping details' });
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     const orderPayload = {
       order_number: 'BLSD-' + Date.now(), // Unique brand prefix
       qikink_shipping: '1', // 1: let Qikink ship, 0: self-ship
-      gateway: 'Prepaid', // Prepaid is standard for online dropshipping
+      gateway: gateway || 'Prepaid', // Prepaid or COD
       shipping_address: {
         first_name: firstName,
         last_name: lastName,
