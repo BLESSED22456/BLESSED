@@ -2,7 +2,7 @@
   {
     "id": "blessed-hands-tee",
     "name": "BLESSED 'Praying Hands' Tee",
-    "price": 459,
+    "price": 398,
     "type": "tees",
     "description": "Premium 240 GSM super-combed 100% cotton t-shirt with drop-shoulder fit. Features the signature BLESSED praying hands back print with custom floral border art.",
     "image": "blessed_hands_beige.jpg",
@@ -24,7 +24,7 @@
   {
     "id": "dream-come-true-tee",
     "name": "BLESSED 'Dream Come True' Tee",
-    "price": 419,
+    "price": 344,
     "type": "tees",
     "description": "Premium 240 GSM heavyweight combed cotton streetwear tee featuring a metallic gold hand holding dollar bills artwork printed on the back.",
     "image": "dream_come_true_red.jpg",
@@ -60,14 +60,15 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-BEAUTY"
   },
   {
     "id": "apocalypse-tee",
     "name": "BLESSED 'Earth Apocalypse' Tee",
-    "price": 419,
+    "price": 344,
     "type": "vintage",
     "description": "Classic 180 GSM combed cotton t-shirt with standard streetwear fit. Features the 'EARTH APOCALYPSE' globe graphic on the center back.",
     "image": "earth_apocalypse.jpg",
@@ -81,14 +82,15 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-APOC"
   },
   {
     "id": "speak-truth-tee",
     "name": "BLESSED 'Speak Truth' Tee",
-    "price": 419,
+    "price": 344,
     "type": "vintage",
     "description": "Classic 180 GSM combed cotton crewneck tee. Front graphic features the screaming mouth collage design and bold contrast typography.",
     "image": "speak_truth.jpg",
@@ -102,7 +104,8 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-TRUTH"
   },
@@ -167,7 +170,8 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-FLR-CASH"
   },
@@ -188,7 +192,8 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-DISASTER"
   },
@@ -209,7 +214,8 @@
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "sku": "TEE-BLSD-TRUTH-WHT"
   }
