@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.blessed_navy.twa",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:83:C5:30:06:BC:54:A1:28:13:FD:A4:5E:28:13:FD:A4:5E:28:13:FD:A4:5E:28:13:FD:A4:5E"
+      ]
+    }
+  }
+]

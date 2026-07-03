@@ -1,9 +1,9 @@
 {
-  "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/api/checkout",
-      "destination": "/api/checkout.js"
-    }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/.well-known/(.*)", "destination": "/.well-known/$1" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/products.json", "destination": "/products.json" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

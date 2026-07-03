@@ -1,0 +1,17 @@
+{
+  "name": "BLESSED Storefront",
+  "short_name": "BLESSED",
+  "description": "Premium streetwear and automated print-on-demand drops.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/app_logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
