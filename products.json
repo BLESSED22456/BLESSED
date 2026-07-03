@@ -328,5 +328,115 @@
       "XXL"
     ],
     "sku": "TEE-BLSD-MANGA"
+  },
+  {
+    "id": "abyss-astronaut-red-crimson",
+    "name": "BLESSED 'Human in Abyss' Tee (Crimson Red)",
+    "price": 344,
+    "type": "tees",
+    "description": "Material: 170 GSM poly mesh fabric designed for breathability and comfort.\nTechnology: Dri-FIT technology to wick away moisture during intense activities.\nFit: Unisex regular fit that suits all body types.\nDesign: All-over printing with a sporty, stylish look perfect for athletic wear.",
+    "image": "abyss_astronaut_red.jpg",
+    "colors": [
+      {
+        "name": "Crimson Red",
+        "hex": "#B91C1C"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-ABYSS-RED"
+  },
+  {
+    "id": "abyss-astronaut-red-burgundy",
+    "name": "BLESSED 'Human in Abyss' Tee (Burgundy Red)",
+    "price": 344,
+    "type": "tees",
+    "description": "Material: 170 GSM poly mesh fabric designed for breathability and comfort.\nTechnology: Dri-FIT technology to wick away moisture during intense activities.\nFit: Unisex regular fit that suits all body types.\nDesign: All-over printing with a sporty, stylish look perfect for athletic wear.",
+    "image": "abyss_astronaut_red.jpg",
+    "colors": [
+      {
+        "name": "Burgundy Red",
+        "hex": "#800020"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-ABYSS-BUR"
+  },
+  {
+    "id": "manga-reverie-blue-tee",
+    "name": "BLESSED 'Manga Reverie' Tee (Periwinkle Blue)",
+    "price": 344,
+    "type": "vintage",
+    "description": "Material: 170 GSM poly mesh fabric designed for breathability and comfort.\nTechnology: Dri-FIT technology to wick away moisture during intense activities.\nFit: Unisex regular fit that suits all body types.\nDesign: All-over printing with a sporty, stylish look perfect for athletic wear.",
+    "image": "manga_panels_blue.jpg",
+    "colors": [
+      {
+        "name": "Periwinkle Blue",
+        "hex": "#7386C0"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-MANGA-BLU"
+  },
+  {
+    "id": "tokyo-skyline-turquoise-tee",
+    "name": "BLESSED 'Tokyo Skyline' Tee (Turquoise Blue)",
+    "price": 344,
+    "type": "vintage",
+    "description": "Material: 170 GSM poly mesh fabric designed for breathability and comfort.\nTechnology: Dri-FIT technology to wick away moisture during intense activities.\nFit: Unisex regular fit that suits all body types.\nDesign: All-over printing with a sporty, stylish look perfect for athletic wear.",
+    "image": "tokyo_skyline_turquoise.jpg",
+    "colors": [
+      {
+        "name": "Turquoise Blue",
+        "hex": "#9BDCE2"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-TOKYO-TUR"
+  },
+  {
+    "id": "tokyo-skyline-black-tee",
+    "name": "BLESSED 'Tokyo Skyline' Tee (Obsidian Black)",
+    "price": 344,
+    "type": "vintage",
+    "description": "Material: 170 GSM poly mesh fabric designed for breathability and comfort.\nTechnology: Dri-FIT technology to wick away moisture during intense activities.\nFit: Unisex regular fit that suits all body types.\nDesign: All-over printing with a sporty, stylish look perfect for athletic wear.",
+    "image": "tokyo_skyline_black.jpg",
+    "colors": [
+      {
+        "name": "Obsidian Black",
+        "hex": "#111111"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "sku": "TEE-BLSD-TOKYO-BLK"
   }
 ]
