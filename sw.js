@@ -1,4 +1,4 @@
-const CACHE_NAME = 'blessed-cache-v1';
+const CACHE_NAME = 'blessed-cache-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,7 +15,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate and clean up old caches
+// Activate and clean up old caches (this discards v1 immediately)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -30,31 +30,49 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Serve assets from cache, fallback to network fetch
+// Dynamic fetch routing: Network-First for HTML/JSON, Cache-First for assets
 self.addEventListener('fetch', event => {
-  // Only cache GET requests (ignore APIs)
   if (event.request.method !== 'GET' || event.request.url.includes('/api/')) {
     return;
   }
   
-  event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then(response => {
-        // Check if valid response to cache
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
+  const isDynamic = event.request.url.includes('products.json') || 
+                    event.request.url.endsWith('/') || 
+                    event.request.url.includes('index.html');
+  
+  if (isDynamic) {
+    // Network-First: Always attempt to fetch from internet, fallback to cache if offline
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (response && response.status === 200) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
         }
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseToCache);
-        });
         return response;
       }).catch(() => {
-        // Optional: Return custom offline indicator if offline and uncached
-      });
-    })
-  );
+        return caches.match(event.request);
+      })
+    );
+  } else {
+    // Cache-First: Serve static files (images, icons) from cache, fallback to network
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).then(response => {
+          if (!response || response.status !== 200) {
+            return response;
+          }
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        });
+      })
+    );
+  }
 });
