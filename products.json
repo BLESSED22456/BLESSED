@@ -1,27 +1,5 @@
 [
   {
-    "id": "blessed-hands-tee",
-    "name": "BLESSED 'Praying Hands' Tee",
-    "price": 398,
-    "type": "tees",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "blessed_hands_beige.jpg",
-    "colors": [
-      {
-        "name": "Beige",
-        "hex": "#E2D4C5"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-HANDS"
-  },
-  {
     "id": "dream-come-true-tee",
     "name": "BLESSED 'Dream Come True' Tee",
     "price": 344,
@@ -42,28 +20,6 @@
       "XXL"
     ],
     "sku": "TEE-BLSD-DREAM"
-  },
-  {
-    "id": "beauty-money-tee",
-    "name": "BLESSED 'Beauty Money' Tee",
-    "price": 398,
-    "type": "oversized",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "beauty_money_mint.jpg",
-    "colors": [
-      {
-        "name": "Mint Green",
-        "hex": "#93C5FD"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-BEAUTY"
   },
   {
     "id": "apocalypse-tee",
@@ -110,72 +66,6 @@
     "sku": "TEE-BLSD-TRUTH"
   },
   {
-    "id": "statue-authority-yellow",
-    "name": "BLESSED 'Statue of Authority' Tee (Mustard Yellow)",
-    "price": 398,
-    "type": "tees",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "statue_authority_yellow.jpg",
-    "colors": [
-      {
-        "name": "Mustard Yellow",
-        "hex": "#DDA15E"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-AUTH-YLW"
-  },
-  {
-    "id": "statue-authority-black",
-    "name": "BLESSED 'Statue of Authority' Tee (Obsidian Black)",
-    "price": 398,
-    "type": "tees",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "statue_authority_black.jpg",
-    "colors": [
-      {
-        "name": "Obsidian Black",
-        "hex": "#111111"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-AUTH-BLK"
-  },
-  {
-    "id": "florals-cash-white",
-    "name": "BLESSED 'Florals & Cash' Tee (Off-White)",
-    "price": 398,
-    "type": "oversized",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "florals_cash_white.jpg",
-    "colors": [
-      {
-        "name": "Off-White",
-        "hex": "#F5F5F0"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-FLR-CASH"
-  },
-  {
     "id": "world-disaster-red",
     "name": "BLESSED 'World Disaster' Tee (Crimson Red)",
     "price": 344,
@@ -196,28 +86,6 @@
       "XXL"
     ],
     "sku": "TEE-BLSD-DISASTER"
-  },
-  {
-    "id": "speak-truth-white",
-    "name": "BLESSED 'Speak Truth' Tee (Bone White)",
-    "price": 398,
-    "type": "vintage",
-    "description": "Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.",
-    "image": "speak_truth_white.jpg",
-    "colors": [
-      {
-        "name": "Bone White",
-        "hex": "#EAE6DF"
-      }
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "sku": "TEE-BLSD-TRUTH-WHT"
   },
   {
     "id": "abyss-astronaut-tee",

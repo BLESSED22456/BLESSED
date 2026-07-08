@@ -130,19 +130,6 @@
     // Global Mock Apparel Products (Easy for User to Replace Later)
     const PRODUCTS = [
       {
-        id: 'blessed-hands-tee',
-        name: 'BLESSED "Praying Hands" Tee',
-        price: 398,
-        type: 'tees',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'blessed_hands_beige.jpg',
-        colors: [
-          { name: 'Beige', hex: '#E2D4C5' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-HANDS'
-      },
-      {
         id: 'dream-come-true-tee',
         name: 'BLESSED "Dream Come True" Tee',
         price: 344,
@@ -154,19 +141,6 @@
         ],
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
         sku: 'TEE-BLSD-DREAM'
-      },
-      {
-        id: 'beauty-money-tee',
-        name: 'BLESSED "Beauty Money" Tee',
-        price: 398,
-        type: 'oversized',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'beauty_money_mint.jpg',
-        colors: [
-          { name: 'Mint Green', hex: '#93C5FD' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-BEAUTY'
       },
       {
         id: 'apocalypse-tee',
@@ -195,45 +169,6 @@
         sku: 'TEE-BLSD-TRUTH'
       },
       {
-        id: 'statue-authority-yellow',
-        name: 'BLESSED "Statue of Authority" Tee (Mustard Yellow)',
-        price: 398,
-        type: 'tees',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'statue_authority_yellow.jpg',
-        colors: [
-          { name: 'Mustard Yellow', hex: '#DDA15E' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-AUTH-YLW'
-      },
-      {
-        id: 'statue-authority-black',
-        name: 'BLESSED "Statue of Authority" Tee (Obsidian Black)',
-        price: 398,
-        type: 'tees',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'statue_authority_black.jpg',
-        colors: [
-          { name: 'Obsidian Black', hex: '#111111' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-AUTH-BLK'
-      },
-      {
-        id: 'florals-cash-white',
-        name: 'BLESSED "Florals & Cash" Tee (Off-White)',
-        price: 398,
-        type: 'oversized',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'florals_cash_white.jpg',
-        colors: [
-          { name: 'Off-White', hex: '#F5F5F0' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-FLR-CASH'
-      },
-      {
         id: 'world-disaster-red',
         name: 'BLESSED "World Disaster" Tee (Crimson Red)',
         price: 344,
@@ -245,19 +180,6 @@
         ],
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
         sku: 'TEE-BLSD-DISASTER'
-      },
-      {
-        id: 'speak-truth-white',
-        name: 'BLESSED "Speak Truth" Tee (Bone White)',
-        price: 398,
-        type: 'vintage',
-        description: 'Material: 240 GSM micro-knitted polyester, soft and durable.\nDesign: Unisex style with a folded neck and relaxed oversized silhouette.\nPrint: Fade-proof all-over print for lasting vibrancy.\nFit: Regular oversized fit, ideal for comfort and streetwear looks.',
-        image: 'speak_truth_white.jpg',
-        colors: [
-          { name: 'Bone White', hex: '#EAE6DF' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-        sku: 'TEE-BLSD-TRUTH-WHT'
       },
       {
         id: 'abyss-astronaut-tee',
@@ -852,7 +774,7 @@
     };
 
     // 5. SHOP SECTION (Price Link Target)
-    const ShopSection = ({ onAddToCart, onBuyNow, activeFilter, onFilterChange, products }) => {
+    const ShopSection = ({ onAddToCart, onBuyNow, activeFilter, onFilterChange, products, onOpenSizeChart }) => {
       const [selectedSizes, setSelectedSizes] = useState({});
       const [selectedColors, setSelectedColors] = useState({});
 
@@ -963,9 +885,17 @@
                       {/* Option Selectors */}
                       <div className="space-y-4 mb-6 border-t border-brandLight/10 pt-5">
                         
-                        {/* Size Picker */}
-                        <div className="flex items-center gap-4">
-                          <span className="text-xs uppercase tracking-wider text-brandLight/50 font-medium w-12">Size:</span>
+                        {/* Size Picker with Size Guide */}
+                        <div className="flex flex-col gap-2">
+                          <div className="flex justify-between items-center w-full">
+                            <span className="text-xs uppercase tracking-wider text-brandLight/50 font-medium">Size:</span>
+                            <button
+                              onClick={onOpenSizeChart}
+                              className="text-[10px] uppercase font-bold tracking-widest text-pink-500 hover:text-pink-400 transition-colors flex items-center gap-1 select-none"
+                            >
+                              Size Guide
+                            </button>
+                          </div>
                           <div className="flex gap-2 flex-wrap">
                             {product.sizes.map(size => (
                               <button
@@ -1634,12 +1564,53 @@
     };
 
     // ==========================================
+    // SIZE CHART MODAL
+    // ==========================================
+    const SizeChartModal = ({ isOpen, onClose }) => {
+      if (!isOpen) return null;
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+          
+          {/* Modal Card */}
+          <div className="relative w-full max-w-xl bg-zinc-900 border border-brandLight/10 rounded-[32px] shadow-2xl p-6 text-brandLight z-55 overflow-hidden max-h-[90vh] flex flex-col items-center">
+            <button 
+              onClick={onClose}
+              className="absolute top-6 right-6 p-1 rounded-full hover:bg-zinc-800 text-brandLight/60 hover:text-white transition-colors z-10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <h3 className="text-lg font-bold uppercase tracking-wider text-white mb-6">Size Guide</h3>
+            
+            <div className="w-full flex-1 overflow-auto rounded-2xl bg-[#f7f5ee] p-4 flex items-center justify-center">
+              <img 
+                src="/size_chart.png" 
+                alt="Size Chart" 
+                className="w-full h-auto object-contain max-h-[60vh] mx-auto rounded-lg shadow-sm"
+              />
+            </div>
+            
+            <button
+              onClick={onClose}
+              className="mt-6 w-full py-3.5 bg-brandLight text-brandDark hover:bg-white text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-200 active:scale-95"
+            >
+              Close Guide
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    // ==========================================
     // MAIN APP CONTAINER
     // ==========================================
     const App = () => {
       const [cart, setCart] = useState([]);
       const [isCartOpen, setIsCartOpen] = useState(false);
       const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+      const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
       const [categoryFilter, setCategoryFilter] = useState('all');
       const [products, setProducts] = useState(PRODUCTS);
 
@@ -1662,7 +1633,7 @@
 
       // Scroll lock when drawers/modals are active
       useEffect(() => {
-        if (isCartOpen || isCheckoutOpen) {
+        if (isCartOpen || isCheckoutOpen || isSizeChartOpen) {
           document.body.style.overflow = 'hidden';
         } else {
           document.body.style.overflow = 'unset';
@@ -1670,7 +1641,7 @@
         return () => {
           document.body.style.overflow = 'unset';
         };
-      }, [isCartOpen, isCheckoutOpen]);
+      }, [isCartOpen, isCheckoutOpen, isSizeChartOpen]);
 
       // Cart modifiers
       const handleAddToCart = (product, size, color) => {
@@ -1756,6 +1727,13 @@
             activeFilter={categoryFilter}
             onFilterChange={setCategoryFilter}
             products={products}
+            onOpenSizeChart={() => setIsSizeChartOpen(true)}
+          />
+          
+          {/* Size Chart Modal */}
+          <SizeChartModal 
+            isOpen={isSizeChartOpen}
+            onClose={() => setIsSizeChartOpen(false)}
           />
           
           {/* Categories Section (Converted from Capsules/Projects) */}
